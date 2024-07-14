@@ -24,6 +24,7 @@ const taskSchema = new mongoose.Schema({
 const Task = mongoose.model('Task', taskSchema);
 
 // Routes
+//create task
 app.post('/tasks', async (req, res) => {
   const { value } = req.body;
   const task = new Task({ value });
@@ -31,16 +32,19 @@ app.post('/tasks', async (req, res) => {
   res.json(task);
 });
 
+//get task
 app.get('/tasks', async (req, res) => {
   const tasks = await Task.find();
   res.json(tasks);
 });
 
+//delete task
 app.delete('/tasks/:id', async (req, res) => {
   await Task.findByIdAndDelete(req.params.id);
   res.sendStatus(200);
 });
 
+//update task
 app.put('/tasks/:id', async (req, res) => {
   const { value } = req.body;
   const task = await Task.findByIdAndUpdate(req.params.id, { value }, { new: true });
